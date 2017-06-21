@@ -125,22 +125,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         for (int i = 0; i < eyesArray.length; i++)
             Imgproc.rectangle(mRgba, eyesArray[i].tl(), eyesArray[i].br(), new Scalar(0, 255, 0, 255), 3);
 
-        /// Reduce the noise so we avoid false circle detection
-        Imgproc.GaussianBlur( mGray, mGray, new Size(5,5), 2, 2 );
-
-        Mat circles = new Mat();
-
-        /// Apply the Hough Transform to find the circles
-        Imgproc.HoughCircles( mGray, circles, CV_HOUGH_GRADIENT, 1, mGray.rows()/20, 100, 45, 20, 100 );
-
-        Log.d("circle","circle detect num"+circles.cols());
-
-        /// Draw the circles detected
-        for( int i = 0; i < circles.cols(); i++ )
-        {
-            double x[] = circles.get(0,i);
-            Imgproc.circle(mRgba,new Point(x[0],x[1]),(int)x[2],new Scalar(255,0,0),10);
-        }
 
         return mRgba;
     }
